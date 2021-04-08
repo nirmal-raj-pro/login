@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +23,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::redirect('/', 'home');
 
 
 Auth::routes();
@@ -26,7 +32,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::prefix('/admin')->middleware('admin')->group(function () {
 
-    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+
+   
 
 });
 
@@ -35,3 +43,8 @@ Route::prefix('/seller')->middleware('seller')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Seller\DashboardController::class, 'index']);
 
 });
+
+
+Route::resources([
+    'users' => UserController::class,
+]);
